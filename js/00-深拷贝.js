@@ -3,14 +3,11 @@ function deepClone(obj) {
   // 值类型、null、function 直接返回
   if (typeof obj !== "object" || obj == null) return obj;
   // 数组、对象、null都是object
-  let result = Array.isArray(obj) ? [] : {};
+  let result = obj instanceof Array ? [] : {};
   for (let key in obj) {
+    // 保证 key 不是原型的属性
     if (obj.hasOwnProperty(key)) {
-      if (typeof obj[key] === "object") {
-        result[key] = deepClone(obj[key]);
-      } else {
-        result[key] = obj[key];
-      }
+      result[key] = deepClone(obj[key]);
     }
   }
   return result;
